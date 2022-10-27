@@ -183,7 +183,6 @@ func (hlsDl *HlsDl) downloadSegments(segments []*Segment) error {
 }
 
 func (hlsDl *HlsDl) join(dir string, segments []*Segment, filename string) (string, error) {
-	fmt.Println("Joining segments")
 	if filename == "" {
 		filename = "video.ts"
 	}
