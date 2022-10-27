@@ -182,10 +182,12 @@ func (hlsDl *HlsDl) downloadSegments(segments []*Segment) error {
 
 }
 
-func (hlsDl *HlsDl) join(dir string, segments []*Segment) (string, error) {
+func (hlsDl *HlsDl) join(dir string, segments []*Segment, filename string) (string, error) {
 	fmt.Println("Joining segments")
-
-	filepath := filepath.Join(dir, "video.ts")
+	if filename == "" {
+		filename = "video.ts"
+	}
+	filepath := filepath.Join(dir, filename)
 
 	file, err := os.Create(filepath)
 	if err != nil {
@@ -216,7 +218,7 @@ func (hlsDl *HlsDl) join(dir string, segments []*Segment) (string, error) {
 	return filepath, nil
 }
 
-func (hlsDl *HlsDl) Download() (string, error) {
+func (hlsDl *HlsDl) Download(filename string) (string, error) {
 	segs, err := parseHlsSegments(hlsDl.hlsURL, hlsDl.headers)
 	if err != nil {
 		return "", err
@@ -230,7 +232,7 @@ func (hlsDl *HlsDl) Download() (string, error) {
 		return "", err
 	}
 
-	filepath, err := hlsDl.join(hlsDl.dir, segs)
+	filepath, err := hlsDl.join(hlsDl.dir, segs, filename)
 	if err != nil {
 		return "", err
 	}
