@@ -27,7 +27,7 @@ func TestDescrypt(t *testing.T) {
 
 func TestDownload(t *testing.T) {
 	hlsDl := New("https://cdn.theoplayer.com/video/big_buck_bunny_encrypted/stream-800/index.m3u8", nil, "./download", 2, false)
-	filepath, err := hlsDl.Download()
+	filepath, err := hlsDl.Download("video.mp4")
 	if err != nil {
 		t.Fatal(err)
 	}
