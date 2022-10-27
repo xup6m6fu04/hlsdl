@@ -153,7 +153,7 @@ func (hlsDl *HlsDl) downloadSegments(segments []*Segment) error {
 	}()
 
 	if hlsDl.enableBar {
-		hlsDl.bar = pb.New(len(segments)).SetMaxWidth(100).Prefix("Downloading...")
+		hlsDl.bar = pb.New(len(segments)).SetMaxWidth(100).Prefix("檔案下載中 ...")
 		hlsDl.bar.ShowElapsedTime = true
 		hlsDl.bar.Start()
 	}
