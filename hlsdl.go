@@ -188,7 +188,7 @@ func (hlsDl *HlsDl) join(dir string, segments []*Segment, filename string) (stri
 	}
 	filepath := filepath.Join(dir, filename)
 
-	file, err := os.OpenFile(filepath, os.O_RDWR|os.O_CREATE|os.O_APPEND, 0644)
+	file, err := os.Create(filepath)
 	if err != nil {
 		return "", err
 	}
