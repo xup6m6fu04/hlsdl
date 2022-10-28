@@ -182,7 +182,7 @@ func (hlsDl *HlsDl) downloadSegments(segments []*Segment) error {
 
 }
 
-func (hlsDl *HlsDl) join(dir string, segments []*Segment, filename string) (string, error) {
+func (hlsDl *HlsDl) join(dir string, segments []*Segment, filename string, deleteTs bool) (string, error) {
 	if filename == "" {
 		filename = "video.ts"
 	}
@@ -209,15 +209,17 @@ func (hlsDl *HlsDl) join(dir string, segments []*Segment, filename string) (stri
 			return "", err
 		}
 
-		if err := os.RemoveAll(segment.Path); err != nil {
-			return "", err
+		if deleteTs {
+			if err := os.RemoveAll(segment.Path); err != nil {
+				return "", err
+			}
 		}
 	}
 
 	return filepath, nil
 }
 
-func (hlsDl *HlsDl) Download(filename string) (string, error) {
+func (hlsDl *HlsDl) Download(filename string, deleteTs bool) (string, error) {
 	segs, err := parseHlsSegments(hlsDl.hlsURL, hlsDl.headers)
 	if err != nil {
 		return "", err
@@ -231,7 +233,7 @@ func (hlsDl *HlsDl) Download(filename string) (string, error) {
 		return "", err
 	}
 
-	filepath, err := hlsDl.join(hlsDl.dir, segs, filename)
+	filepath, err := hlsDl.join(hlsDl.dir, segs, filename, deleteTs)
 	if err != nil {
 		return "", err
 	}
